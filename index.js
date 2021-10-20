@@ -2,9 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
 const { logErrors, errorHandler, boomErrorHandler } = require('./middleware/errorHandler');
+const dbConnection = require("./dataBase/config")
 
 const app = express();
-const port = process.env.PORT || 3000;
+
+dbConnection()
+
+const port = process.env.PORT || 3001;
 
 app.use(express.json());
 
@@ -36,5 +40,5 @@ app.use(errorHandler);
 
 
 app.listen(port, () => {
-  console.log('Mi port' +  port);
+  console.log('Mi port ' +  port);
 });
