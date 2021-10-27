@@ -62,7 +62,8 @@ router.put(
   }
 );
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',   validatorHandler(createProductSchema, 'body'),
+async (req, res) => {
   try {
     await Products.findById(req.params.id);
     await Products.findOneAndRemove({ _id: req.params.id });
@@ -72,5 +73,6 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 });
+
 
 module.exports = router;

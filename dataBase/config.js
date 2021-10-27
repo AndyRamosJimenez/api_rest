@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
+require('dotenv').config({ path: '.env' });
 
-async function dbConnection() {
-  try {
-    await mongoose.connect("mongodb+srv://m001-student:m001-mongodb-basics@sandbox.bmamo.mongodb.net/m001-student?retryWrites=true&w=majority", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-
-    console.log('database online');
-  } catch (error) {
-    console.log(error);
-    throw new Error('Failed to start the database');
-  }
+const conectarDB = async () => {
+    try {
+        await mongoose.connect(process.env.DB_MONGO, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log('DB Conectada');
+    } catch (error) {
+        console.log('hubo un error')
+        console.log(error);
+        process.exit(1);
+    }
 }
 
-module.exports = dbConnection
+module.exports = conectarDB;
