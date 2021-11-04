@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const UsersService = require('../services/user.services');
+const userService = require('../schema/UserSchema');
 const validatorHandler = require('../middleware/validator.handler');
 const {
   createUserSchema,
   updateUserSchema,
   getUserSchema,
-} = require('../schema/userSchema');
+} = require('../schema/UserSchema');
 
-const service = new UsersService();
+const service = new userService();
 
 router.get('/user', (req, res) => {
   const { limit, offset } = req.query;

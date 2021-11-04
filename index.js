@@ -1,12 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
-const { logErrors, errorHandler, boomErrorHandler } = require('./middleware/errorHandler');
-const dbConnection = require("./dataBase/config")
+const {
+  logErrors,
+  errorHandler,
+  boomErrorHandler,
+} = require('./middleware/errorHandler');
+const dbConnection = require('./dataBase/config');
 
 const app = express();
 
-dbConnection()
+dbConnection();
 
 const port = process.env.PORT || 3001;
 
@@ -20,9 +24,11 @@ const options = {
     } else {
       callback(new Error('no permitido'));
     }
-  }
-}
+  },
+};
 app.use(cors(options));
+
+require('./utils/auth');
 
 app.get('/', (req, res) => {
   res.send('Hola mi server en express');
@@ -38,7 +44,6 @@ app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
-
 app.listen(port, () => {
-  console.log('Mi port ' +  port);
+  console.log('Mi port ' + port);
 });

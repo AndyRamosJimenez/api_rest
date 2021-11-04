@@ -1,7 +1,7 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
 
-class UsersService {
+class UserService {
   constructor() {
     this.users = [];
     this.generate();
@@ -15,7 +15,7 @@ class UsersService {
         name: faker.commerce.productName(),
         lastname: faker.commerce.productName(),
         image: faker.image.imageUrl(),
-        isBlock: faker.datatype.boolean()
+        isBlock: faker.datatype.boolean(),
       });
     }
   }
@@ -23,8 +23,8 @@ class UsersService {
   async create(data) {
     const newUser = {
       id: faker.datatype.uuid(),
-      ...data
-    }
+      ...data,
+    };
     this.users.push(newUser);
     return newUser;
   }
@@ -34,11 +34,11 @@ class UsersService {
       setTimeout(() => {
         resolve(this.users);
       }, 3000);
-    })
+    });
   }
 
   async findOne(id) {
-    const user = this.users.find(item => item.id === id);
+    const user = this.users.find((item) => item.id === id);
     if (!user) {
       throw boom.notFound('user not found');
     }
@@ -49,26 +49,25 @@ class UsersService {
   }
 
   async update(id, changes) {
-    const index = this.users.findIndex(item => item.id === id);
+    const index = this.users.findIndex((item) => item.id === id);
     if (index === -1) {
       throw boom.notFound('user not found');
     }
     const user = this.users[index];
     this.users[index] = {
       ...user,
-      ...changes
+      ...changes,
     };
     return this.users[index];
   }
 
   async delete(id) {
-    const index = this.users.findIndex(item => item.id === id);
+    const index = this.users.findIndex((item) => item.id === id);
     if (index === -1) {
       throw boom.notFound('user not found');
     }
     this.users.splice(index, 1);
     return { id };
   }
-
 }
-module.exports = UsersService;
+module.exports = UserService;

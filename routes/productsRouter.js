@@ -17,10 +17,6 @@ router.get('/', async (req, res) => {
   res.json(products);
 });
 
-router.get('/filter', (req, res) => {
-  res.send('Yo soy un filter');
-});
-
 router.get(
   '/:id',
   validatorHandler(getProductSchema, 'params'),
